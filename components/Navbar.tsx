@@ -7,7 +7,6 @@ import {
   IconButton,
   Box,
   Tooltip,
-  Badge,
 } from '@mui/material';
 import {
   LocalOffer as LocalOfferIcon,
@@ -74,7 +73,7 @@ export default function Navbar({ userName }: NavbarProps) {
           </Box>
         </Toolbar>
       </AppBar>
-      <Toolbar /> {/* Espaciador para el contenido debajo del AppBar */}
+      <Toolbar /> 
     </>
   );
 } 

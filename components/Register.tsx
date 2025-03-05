@@ -197,7 +197,6 @@ const Register = () => {
                   />
                 </Grid>
 
-                {/* Botón de registro */}
                 <Grid item xs={12}>
                   <Button
                     type="submit"
@@ -217,7 +216,6 @@ const Register = () => {
                   </Button>
                 </Grid>
 
-                {/* Enlace a login */}
                 <Grid item xs={12}>
                   <Box sx={{ textAlign: 'center', mt: 2 }}>
                     <Typography variant="body1" color="text.secondary">

@@ -14,7 +14,7 @@ Antes de comenzar, asegúrate de tener instalado:
 
 1. **Clonar el repositorio**
    Corre el comando:
-   git clone https://github.com/tu-usuario/hotelinking-test.git
+   git clone https://github.com/NeilenC/Hotelinking-test.git
    cd hotelinking-test
  
 

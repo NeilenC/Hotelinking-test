@@ -7,12 +7,10 @@ import {
   Typography,
   Paper,
   Alert,
-  CircularProgress,
   Snackbar,
   Container,
   Grid,
 } from "@mui/material";
-import { Login as LoginIcon } from "@mui/icons-material";
 
 interface LoginFormProps {
   onLoginSuccess?: () => void;
@@ -93,7 +91,6 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
         }}
       >
         <Grid container spacing={3}>
-          {/* Título */}
           <Grid item xs={12}>
             <Typography 
               variant="h4" 
@@ -117,11 +114,9 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
             </Grid>
           )}
 
-          {/* Formulario */}
           <Grid item xs={12}>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                {/* Email */}
                 <Grid item xs={12}>
                   <TextField
                     label="Correo electrónico"
@@ -142,7 +137,6 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                   />
                 </Grid>
 
-                {/* Contraseña */}
                 <Grid item xs={12}>
                   <TextField
                     label="Contraseña"
@@ -162,7 +156,6 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                   />
                 </Grid>
 
-                {/* Botón de inicio de sesión */}
                 <Grid item xs={12}>
                   <Button
                     type="submit"
@@ -181,7 +174,6 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                   </Button>
                 </Grid>
 
-                {/* Enlace a registro */}
                 <Grid item xs={12}>
                   <Box sx={{ textAlign: 'center', mt: 2 }}>
                     <Typography variant="body1" color="text.secondary">
@@ -212,7 +204,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert severity="success" sx={{ width: "100%" }}>
-          ¡Login exitoso! Redirigiendo...
+          ¡Login exitoso! 
         </Alert>
       </Snackbar>
     </Container>
