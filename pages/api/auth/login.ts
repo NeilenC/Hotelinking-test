@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import connectDB from '../../../lib/mongodb';
-import User from '../../../models/User';
+import connectDB from '../../../backend/lib/mongodb';
+import User from '../../../backend/models/User';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'tu-clave-secreta-aqui';
 

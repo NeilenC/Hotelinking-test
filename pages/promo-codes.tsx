@@ -12,7 +12,7 @@ import Layout from '../components/Layout';
 import PromoCodesTable from '../components/promo-codes/PromoCodesTable';
 import RedeemDialog from '../components/promo-codes/RedeemDialog';
 import { PromoCode } from '../types/promoCode';
-import { fetchPromoCodes, redeemPromoCode } from '../services/api';
+import { fetchPromoCodes, redeemPromoCode } from '../backend/services/api';
 import { formatDate } from '../utils/formatters';
 
 interface SnackbarState {

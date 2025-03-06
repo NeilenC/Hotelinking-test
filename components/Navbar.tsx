@@ -11,7 +11,6 @@ import {
 import {
   LocalOffer as LocalOfferIcon,
   Logout as LogoutIcon,
-  Home as HomeIcon,
 } from '@mui/icons-material';
 
 interface NavbarProps {

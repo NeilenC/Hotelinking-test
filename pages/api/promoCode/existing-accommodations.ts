@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import PromoCode from '../../../models/PromoCode';
-import connectDB from '@/lib/mongodb';
+import PromoCode from '../../../backend/models/PromoCode';
+import connectDB from '@/backend/lib/mongodb';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';

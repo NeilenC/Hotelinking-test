@@ -1,6 +1,5 @@
 import {
   Button,
-  Tooltip,
   CircularProgress,
   Box,
   Dialog,
@@ -28,7 +27,6 @@ export default function PromoCodeButton({
 }: PromoCodeButtonProps) {
   const [openDialog, setOpenDialog] = useState(false);
 
-  // Mostrar el Dialog automáticamente si hay un código existente
   useEffect(() => {
     if (hasExistingCode) {
       setOpenDialog(true);

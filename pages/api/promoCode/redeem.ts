@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import connectDB from '../../../lib/mongodb';
-import PromoCode from '../../../models/PromoCode';
+import connectDB from '../../../backend/lib/mongodb';
+import PromoCode from '../../../backend/models/PromoCode';
 import jwt from 'jsonwebtoken';
 
 export default async function handler(

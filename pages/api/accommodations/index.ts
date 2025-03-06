@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import connectDB from '../../../lib/mongodb';
-import Accommodation from '../../../models/Accommodation';
+import connectDB from '../../../backend/lib/mongodb';
+import Accommodation from '../../../backend/models/Accommodation';
 
 export default async function handler(
   req: NextApiRequest,

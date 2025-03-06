@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import connectDB from '../../../lib/mongodb';
-import User from '../../../models/User';
+import connectDB from '../../../backend/lib/mongodb';
+import User from '../../../backend/models/User';
 
 export default async function handler(
   req: NextApiRequest,

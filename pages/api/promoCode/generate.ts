@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import connectDB from '../../../lib/mongodb';
-import PromoCode from '../../../models/PromoCode';
-import Accommodation from '../../../models/Accommodation';
+import connectDB from '../../../backend/lib/mongodb';
+import PromoCode from '../../../backend/models/PromoCode';
+import Accommodation from '../../../backend/models/Accommodation';
 import jwt from 'jsonwebtoken';
 import { customAlphabet } from 'nanoid';
 

@@ -1,15 +1,9 @@
-import { Accommodation } from '../types/accommodation';
-import { Filters } from '../components/accommodations/AccommodationFilters';
-
 const getAuthToken = () => localStorage.getItem('token');
 
-export const fetchAccommodations = async (filters: Filters) => {
+export const fetchAccommodations = async () => {
   try {
     const queryParams = new URLSearchParams();
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) queryParams.append(key, value);
-    });
-
+    
     const res = await fetch(`/api/accommodations?${queryParams.toString()}`);
     const data = await res.json();
     
