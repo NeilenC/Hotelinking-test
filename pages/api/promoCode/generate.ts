@@ -5,7 +5,7 @@ import Accommodation from '../../../backend/models/Accommodation';
 import jwt from 'jsonwebtoken';
 import { customAlphabet } from 'nanoid';
 
-// Crear un generador de códigos personalizado
+// Creamos un generador de códigos personalizado
 const nanoid = customAlphabet('23456789ABCDEFGHJKLMNPQRSTUVWXYZ', 8);
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -45,37 +45,7 @@ export default async function handler(
 
     await connectDB();
 
-    const existingCode = await PromoCode.findOne({
-      userId: decoded.userId,
-      accommodationId,
-      $or: [
-        { isUsed: false }, 
-        { 
-          isUsed: true, 
-        }
-      ]
-    });
-
-    if (existingCode) {
-      if (existingCode.isUsed) {
-        return res.status(400).json({
-          message: 'No puedes solicitar otro código. Ya has utilizado un código promocional para este alojamiento recientemente.'
-        });
-      } else if (existingCode.expiresAt > new Date()) {
-        return res.status(400).json({
-          message: 'Ya tienes un código promocional activo para este alojamiento. Revisa tus códigos promocionales.'
-        });
-      } else {
-        return res.status(400).json({
-          message: 'Ya has solicitado un código promocional para este alojamiento anteriormente. No es posible solicitar más de un código por alojamiento.'
-        });
-      }
-    }
-
     const accommodation = await Accommodation.findById(accommodationId);
-    if (!accommodation) {
-      return res.status(404).json({ message: 'Alojamiento no encontrado' });
-    }
 
     const originalPrice = accommodation.price;
     const discount = accommodation.discount;

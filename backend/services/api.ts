@@ -2,9 +2,7 @@ const getAuthToken = () => localStorage.getItem('token');
 
 export const fetchAccommodations = async () => {
   try {
-    const queryParams = new URLSearchParams();
-    
-    const res = await fetch(`/api/accommodations?${queryParams.toString()}`);
+    const res = await fetch(`/api/accommodations`);
     const data = await res.json();
     
     if (!res.ok) throw new Error(data.message);
@@ -94,21 +92,3 @@ export const redeemPromoCode = async (promoCodeId: string) => {
   }
 };
 
-export const fetchAccommodationsWithPromoCodes = async () => {
-  try {
-    const token = getAuthToken();
-    const res = await fetch('/api/promoCode/existing-accommodations', {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-    const data = await res.json();
-    
-    if (!res.ok) throw new Error(data.message);
-    
-    return data.accommodationIds;
-  } catch (err) {
-    console.error('Error al verificar códigos existentes:', err);
-    return [];
-  }
-}; 

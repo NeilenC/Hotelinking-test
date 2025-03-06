@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 import connectDB from '../../../backend/lib/mongodb';
 import User from '../../../backend/models/User';
 
@@ -16,29 +15,37 @@ export default async function handler(
 
   try {
     const { email, password } = req.body;
+    
     if (!email || !password) {
       return res.status(400).json({
         message: 'Por favor, proporciona email y contraseña',
       });
     }
+
+    // Conectar a la base de datos
     await connectDB();
 
-    const user = await User.findOne({ email });
-
+    // Buscar el usuario
+    const user = await User.findOne({ email: email.toLowerCase() });
+    
     if (!user) {
+      console.log('Usuario no encontrado:', email);
       return res.status(401).json({
         message: 'Credenciales inválidas',
       });
     }
 
+    // Verificar la contraseña
     const isPasswordValid = await user.comparePassword(password);
-
+    
     if (!isPasswordValid) {
+      console.log('Contraseña inválida para usuario:', email);
       return res.status(401).json({
         message: 'Credenciales inválidas',
       });
     }
 
+    // Generar token
     const token = jwt.sign(
       {
         userId: user._id,
@@ -46,10 +53,11 @@ export default async function handler(
       },
       JWT_SECRET,
       {
-        expiresIn: '7d', 
+        expiresIn: '7d',
       }
     );
 
+    // Enviar respuesta exitosa
     res.status(200).json({
       message: 'Login exitoso',
       token,
@@ -60,9 +68,10 @@ export default async function handler(
       },
     });
   } catch (error: any) {
-    console.error('Error  en login:', error);
+    console.error('Error en login:', error);
     res.status(500).json({
       message: 'Error en el servidor',
+      error: error.message,
     });
   }
 } 

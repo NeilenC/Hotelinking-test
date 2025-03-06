@@ -43,7 +43,6 @@ export default function Navbar({ userName }: NavbarProps) {
 
           <Box sx={{ flexGrow: 1, display: 'flex', gap: 2, ml: 4 }}>
  
-          
           </Box>
           <Box sx={{pr:5}}>
 

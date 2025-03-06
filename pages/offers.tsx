@@ -1,41 +1,31 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { Box, Container, Typography, Button, Grid } from "@mui/material";
+import { Accommodation } from "../types/accommodation";
+import Layout from "../components/Layout";
+import AccommodationCard from "@/components/accommodations/AccommodationCard";
+import PromoCodeDialog from "@/components/accommodations/PromoCodeDialog";
 import {
-  Box,
-  Container,
-  Typography,
-  Button,
-  Grid,
-} from '@mui/material';
-import { Accommodation } from '../types/accommodation';
-import Layout from '../components/Layout';
-import AccommodationCard from '@/components/accommodations/AccommodationCard';
-import PromoCodeDialog from '@/components/accommodations/PromoCodeDialog';
-
-interface Filters {
-  search: string;
-  minPrice: string;
-  maxPrice: string;
-  minDiscount: string;
-  location: string;
-  sortBy: string;
-  order: string;
-}
+  createTestData,
+  fetchAccommodations,
+  generatePromoCode,
+} from "@/backend/services/api";
 
 export default function Offers() {
   const router = useRouter();
   const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
-  const [currentPromoCode, setCurrentPromoCode] = useState('');
-  const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
- 
+  const [currentPromoCode, setCurrentPromoCode] = useState("");
+  const [selectedAccommodation, setSelectedAccommodation] =
+    useState<Accommodation | null>(null);
+
   useEffect(() => {
     const checkAuthAndLoadData = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        router.replace('/');
+        router.replace("/");
         return;
       }
 
@@ -45,67 +35,36 @@ export default function Offers() {
     checkAuthAndLoadData();
   }, [router]);
 
-
-
-  const fetchAccommodations = async () => {
-    const token = localStorage.getItem('token');
+  const fetchAccommodationsHandler = async () => {
+    const token = localStorage.getItem("token");
     if (!token) {
-      router.replace('/');
+      router.replace("/");
       return;
     }
 
     setLoading(true);
     try {
-      const queryParams = new URLSearchParams();
- 
-
-      const res = await fetch(`/api/accommodations?${queryParams.toString()}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!res.ok) {
-        if (res.status === 401) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          router.replace('/');
-          return;
-        }
-        throw new Error('Error al cargar los hospedajes');
-      }
-
-      const data = await res.json();
-      setAccommodations(data.accommodations);
+      const data = await fetchAccommodations();
+      setAccommodations(data);
     } catch (err) {
-      console.error('Error al cargar hospedajes:', err);
-      setError('Error al cargar los hospedajes');
+      console.error("Error al cargar hospedajes:", err);
+      setError("Error al cargar los hospedajes");
     } finally {
       setLoading(false);
     }
   };
 
-  
+  useEffect(() => {
+    fetchAccommodationsHandler();
+  }, []);
+
   const handleGeneratePromoCode = async (accommodation: Accommodation) => {
     setLoading(true);
-    setError('');
+    setError("");
+
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch('/api/promoCode/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          accommodationId: accommodation._id,
-        }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-
-      setCurrentPromoCode(data.promoCode.code);
+      const promoCode = await generatePromoCode(accommodation._id);
+      setCurrentPromoCode(promoCode.code);
       setSelectedAccommodation(accommodation);
       setOpenDialog(true);
     } catch (err: any) {
@@ -117,13 +76,10 @@ export default function Offers() {
 
   const handleSeedData = async () => {
     try {
-      const res = await fetch('/api/accommodations/seed', {
-        method: 'POST',
-      });
-      const data = await res.json();
+      await createTestData();
       fetchAccommodations();
     } catch (err) {
-      console.error('Error al crear datos de prueba:', err);
+      console.error("Error al crear los hospedajes de prueba:", err);
     }
   };
 
@@ -131,15 +87,18 @@ export default function Offers() {
     <Layout>
       <Container maxWidth="lg">
         <Box sx={{ mt: 4, mb: 4 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 4,
+            }}
+          >
             <Typography variant="h4" component="h1" gutterBottom>
               Descubre tu próxima estancia
             </Typography>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={handleSeedData}
-            >
+            <Button variant="outlined" color="primary" onClick={handleSeedData}>
               Crear datos de prueba
             </Button>
           </Box>
@@ -170,4 +129,4 @@ export default function Offers() {
       </Container>
     </Layout>
   );
-} 
+}

@@ -1,5 +1,5 @@
+import Register from '@/components/auth/Register';
 import { Box } from '@mui/material';
-import Register from '../components/Register';
 import Head from 'next/head';
 
 export default function RegisterPage() {
